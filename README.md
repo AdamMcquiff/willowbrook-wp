@@ -25,7 +25,7 @@ This is a boilerplate installation for WordPress comprised of:
 
 ##### Setup WordPress #####
 
-1. Pull the `git` repository locally.
+1. Pull the `git` repository locally - run `git clone https://Zetec@bitbucket.org/zetecit/boilerplate-wordpress.git` in your CLI
 * Setup WordPress following the [Famous 5-Minute Install](https://codex.wordpress.org/Installing_WordPress#Famous_5-Minute_Install) guide - start from step 2.
 
 ##### Setup the Theme #####
