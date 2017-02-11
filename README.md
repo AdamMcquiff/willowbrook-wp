@@ -26,7 +26,7 @@ This is a boilerplate installation for WordPress comprised of:
 ##### Setup WordPress #####
 
 1. Pull the `git` repository locally - run `git clone https://Zetec@bitbucket.org/zetecit/boilerplate-wordpress.git` in your CLI
-* Setup WordPress following the [Famous 5-Minute Install](https://codex.wordpress.org/Installing_WordPress#Famous_5-Minute_Install) guide - start from step 2.
+2. Setup WordPress following the [Famous 5-Minute Install](https://codex.wordpress.org/Installing_WordPress#Famous_5-Minute_Install) guide - start from step 2.
 
 ##### Setup the Theme #####
 
@@ -38,10 +38,10 @@ minifying JavaScript and images, etc.
 We are also using `BrowserSync` to live preview our theme as we build it.
 
 1. Go to `wp-content/themes` and change the name of `wp_theme` to a name of your choice.
-* Go to `wp-content/themes/wp_gulp` and run `npm install` from your CLI.
-* Open `gulpfile.js` and add your new theme directory and localhost URL in the `project` and `url` variables
-* Run `gulp watch` from the same directory from your CLI, this will start `BrowserSync` and start watching your files for changes.
-* You can now start editing the theme within the `wp_theme` directory.
+2. Go to `wp-content/themes/wp_gulp` and run `npm install` from your CLI.
+3. Open `gulpfile.js` and add your new theme directory and localhost URL in the `project` and `url` variables
+4. Run `gulp watch` from the same directory from your CLI, this will start `BrowserSync` and start watching your files for changes.
+5. You can now start editing the theme within the `wp_theme` directory.
 
 ### Gulpfile ###
 
