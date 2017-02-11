@@ -1,0 +1,56 @@
+/******************************************************************
+Site Name: [WEBSITE NAME]
+Author: Zetec IT Solutions
+
+Stylesheet: Variables
+
+Here is where we declare all our variables like colors, fonts,
+base values, and defaults. We want to make sure this file ONLY
+contains variables that way our files don't get all messy.
+No one likes a mess.
+
+******************************************************************/
+
+/*********************
+COLORS
+Need help w/ choosing your colors? Try this site out:
+http://0to255.com/
+*********************/
+
+$alert-yellow:       #CECF60;
+$alert-light-yellow: #DADB88;
+$alert-red:          #AE6872;
+$alert-light-red:    #C28E95;
+$alert-green:        #75AA61;
+$alert-light-green:  #98BF89;
+$alert-blue:         #6181AA;
+$alert-light-blue:   #89A1BF;
+
+$black:              #000;
+$white:              #FFF;
+
+$dark-grey:			 #444;
+$dull-gray:          #787878;
+$nice-gray:          #C8C8C8;
+$light-gray:         #F8F9FA;
+$gray:               #EAEDF2;
+$super-light-gray:   #E5E5E5;
+$text-color:         #5C6B80;
+$meta-gray:          #9FA6B4;
+
+$tan:                #ECEEE5;
+
+$green:              #7DD667;
+
+$blue:               #2980B9;
+
+$light-link:         $light-gray;
+$light-link-hover:   darken($light-link, 10%);
+$light-link-visited: darken($light-link, 10%);
+
+$dark-link:          $dark-grey;
+$dark-link-hover:    lighten($dark-link, 10%);
+$dark-link-visited:  lighten($dark-link, 10%);
+
+$border-color:       #CCC;
+$disabled-gray:      #CFCFCF;

@@ -1,0 +1,76 @@
+/******************************************************************
+Site Name: [WEBSITE NAME]
+Author: Zetec IT Solutions
+
+Stylesheet: Alert Styles
+
+******************************************************************/
+
+/*********************
+ALERT MIXIN
+*********************/
+
+@mixin alert($main-bg, $sub-bg, $small, $reg, $large) {
+	display: inline-block;
+	border-radius: 4px;
+	background-color: $main-bg;
+	padding: 20px;
+	width: 100%;
+	color: $white;
+
+	&::before {
+		display: inline-block;
+		float: left;
+		margin: { right: 10px; };
+		border-radius: 1000px;
+		background-color: $sub-bg;
+		background-image: url("../img/alert-icon-sprite.png");
+		background-repeat: no-repeat;
+		background-position: $reg;
+		width: 25px;
+		height: 25px;
+		content: "";
+	}
+
+	&--small {
+		padding: 10px;
+		font-size: 12px;
+
+		&::before {
+			background-position: $small;
+			width: 18px;
+			height: 18px;
+		}
+    }
+
+	&--large {
+		padding: 30px;
+		font-size: 24px;
+
+		&::before {
+			background-position: $large;
+			width: 40px;
+			height: 40px;
+		}
+	}
+}
+
+/*********************
+ALERTS
+*********************/
+
+.alert-success {
+	@include alert($alert-green, $alert-light-green, 4px 5px, -47px -171px, -89px 13px);
+}
+
+.alert-info {
+	@include alert($alert-blue, $alert-light-blue, 4px -57px, -47px -82px, -89px -108px);
+}
+
+.alert-warning {
+	@include alert($alert-yellow, $alert-light-yellow, 4px -116px, -47px -171px, -89px -232px);
+}
+
+.alert-error {
+	@include alert($alert-red, $alert-light-red, 4px -177px, -47px -261px, -89px -354px);
+}

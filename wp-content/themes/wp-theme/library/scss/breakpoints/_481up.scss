@@ -1,0 +1,128 @@
+/******************************************************************
+Site Name: [WEBSITE NAME]
+Author: Zetec IT Solutions
+
+Stylesheet: 481px and Up Stylesheet
+
+
+******************************************************************/
+
+/*********************
+HEADER AND NAVIGATION
+*********************/
+
+&__header {
+	&__nav {
+		ul {
+			//
+		}
+
+		li {
+			a {
+
+				/*
+				you can use hover styles here even though this size
+				has the possibility of being a mobile device.
+				*/
+				&:hover,
+				&:focus {
+					//
+				}
+			}
+
+			&:first-child {
+				//
+			}
+
+			&:last-child {
+				//
+			}
+
+			/*
+			plan your menus and drop-downs wisely.
+			*/
+			ul.sub-menu,
+			ul.children {
+				li {
+					a {
+						&:hover,
+						&:focus {
+							//
+						}
+
+						&:link {
+							//
+						}
+					}
+
+					&:first-child {
+						//
+					}
+
+					&:last-child {
+						//
+					}
+				}
+			}
+		}
+
+		/* highlight current page */
+		li.current-menu-item,
+		li.current_page_item,
+		li.current_page_ancestor {
+			a {
+				//
+			}
+		}
+	}
+}
+
+
+/*********************
+POSTS & CONTENT STYLES
+*********************/
+
+.entry-content {
+
+	/* at this larger size, we can start to align images */
+	.alignleft,
+	img.alignleft {
+		display: inline;
+		float: left;
+		margin-right: 1.5em;
+	}
+
+	.alignright,
+	img.alignright {
+		display: inline;
+		float: right;
+		margin-left: 1.5em;
+	}
+
+	.aligncenter,
+	img.aligncenter {
+		display: block;
+		clear: both;
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+}
+
+/*********************
+FOOTER STYLES
+*********************/
+
+/*
+check your menus here. do they look good?
+do they need tweaking?
+*/
+.footer {
+	&__nav {
+		ul {
+			li {
+				//
+			}
+		}
+	}
+}

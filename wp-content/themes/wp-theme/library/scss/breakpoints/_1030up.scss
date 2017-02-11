@@ -1,0 +1,35 @@
+/******************************************************************
+Site Name: [WEBSITE NAME]
+Author: Zetec IT Solutions
+
+Stylesheet: Desktop Stylsheet
+
+This is the desktop size. It's larger than an iPad so it will only
+be seen on the Desktop.
+
+******************************************************************/
+
+/*********************
+LAYOUT & GRID STYLES
+*********************/
+
+.wrap {
+	max-width: 1080px;
+}
+
+/*********************
+HEADER STYLES
+*********************/
+
+.header {
+	&__top {
+		max-width: 1080px;
+    }
+
+	&__nav {
+		ul {
+			margin: 0 auto;
+			max-width: 1080px;
+		}
+    }
+}

@@ -1,0 +1,223 @@
+/******************************************************************
+Site Name: [WEBSITE NAME]
+Author: Zetec IT Solutions
+
+Stylesheet: TinyMCE Editor
+
+This stylesheet is loaded automatically by Wordpress when compiled
+and placed in the root theme directory folder as editor-style.css
+
+For more info, check out the codex:
+http://codex.wordpress.org/Editor_Style
+
+******************************************************************/
+
+#tinymce.wp-editor {
+	// normalize: http://necolas.github.io/normalize.css/
+	@import "partials/normalize";
+
+	// Sass variables
+	@import "partials/variables";
+
+	// typography
+	@import "partials/typography";
+
+	// Sass functions
+	@import "partials/functions";
+
+	// import mixins
+	@import "partials/mixins";
+
+	padding: 1.5em 1.5em 0;
+	width: 731px;
+	line-height: 1.5;
+	color: $text-color;
+	font-family: $lato;
+	font-size: 100%;
+
+	/*********************
+	LINK STYLES
+	*********************/
+
+	a,
+	a:visited {
+		color: $light-link;
+
+		/* on hover */
+		&:hover,
+		&:focus {
+			color: $light-link-hover;
+		}
+
+		/* on click */
+		&:active {
+			//
+		}
+
+		&:link {
+			-webkit-tap-highlight-color: rgba($black, 0.3);
+		}
+	}
+
+	/******************************************************************
+	H1, H2, H3, H4, H5 STYLES
+	******************************************************************/
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5 {
+		text-rendering: geometricPrecision;
+		font-weight: 500;
+
+		a {
+			text-decoration: none;
+		}
+	}
+
+	h1 {
+		line-height: 1.333em;
+		font-size: 2.5em;
+	}
+
+	h2 {
+		margin-bottom: 0.375em;
+		line-height: 1.4em;
+		font-size: 1.75em;
+	}
+
+	h3 {
+		font-size: 1.125em;
+	}
+
+	h4 {
+		font-size: 1.1em;
+		font-weight: 700;
+	}
+
+	h5 {
+		text-transform: uppercase;
+		line-height: 2.09em;
+		letter-spacing: 2px;
+		font-size: 0.846em;
+	}
+
+	p {
+		margin: 0 0 1.5em;
+	}
+
+	table {
+		margin-bottom: 1.5em;
+		border: 1px solid $gray;
+		width: 100%;
+
+		caption {
+			margin: 0 0 7px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			color: $meta-gray;
+			font-size: 0.75em;
+		}
+	}
+
+	tr {
+		border-bottom: 1px solid $gray;
+
+		&:nth-child(even) {
+			background-color: $light-gray;
+		}
+	}
+
+	td {
+		border-right: 1px solid $gray;
+		padding: 7px;
+
+		&:last-child {
+			border-right: 0;
+		}
+	}
+
+	th {
+		border-right: 1px solid $gray;
+		border-bottom: 1px solid $gray;
+		background-color: $light-gray;
+
+		&:last-child {
+			border-right: 0;
+		}
+	}
+
+	blockquote {
+		margin: 0 0 1.5em 0.75em;
+		border-left: 3px solid $blue;
+		padding: 0 0 0 0.75em;
+		color: $meta-gray;
+		font-style: italic;
+
+		&::before {
+			//
+		}
+	}
+
+	dd {
+		margin: { bottom: 1.5em; left: 0; };
+		color: $dull-gray;
+		font-size: 0.9em;
+	}
+
+	img {
+		margin: { top: 0; right: 0; bottom: 1.5em; left: 0; };
+		max-width: 100%;
+		height: auto;
+	}
+
+	.size-auto,
+	.size-full,
+	.size-large,
+	.size-medium,
+	.size-thumbnail {
+		max-width: 100%;
+		height: auto;
+	}
+
+	pre {
+		margin: { top: 0; right: 0; bottom: 1.5em; left: 0; };
+		border-radius: 3px;
+		background: $black;
+		padding: 1.5em;
+		color: $light-gray;
+		font-size: 0.9em;
+	}
+
+	/*********************
+	LARGER MOBILE DEVICES
+	This is for devices like the Galaxy Note or something that's
+	larger than an iPhone but smaller than a tablet. Let's call them
+	tweeners.
+	*********************/
+	@media only screen and (min-width: 481px) {
+		.alignleft,
+		img.alignleft {
+			display: inline;
+			float: left;
+			margin-right: 1.5em;
+		}
+
+		.alignright,
+		img.alignright {
+			display: inline;
+			float: right;
+			margin-left: 1.5em;
+		}
+
+		.aligncenter,
+		img.aligncenter {
+			display: block;
+			clear: both;
+			margin-right: auto;
+			margin-left: auto;
+		}
+
+	}
+}
