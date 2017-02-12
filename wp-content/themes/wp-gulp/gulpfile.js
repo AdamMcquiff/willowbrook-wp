@@ -79,9 +79,7 @@ gulp.task('bitmap', function () {
 gulp.task('vector', function () {
     return gulp.src(paths.src.vector)
         .pipe(svgmin())
-        .pipe(gulp.dest(paths.build.img))
-        .pipe(browserSync.stream())
-        .pipe(livereload());
+        .pipe(gulp.dest(paths.build.img));
 });
 
 // watches for changes in directories
