@@ -66,7 +66,7 @@ function bones_rss_dashboard_widget() {
 		foreach ($items as $item): ?>
 
 		<h4 style="margin-bottom: 0;">
-			<a href="<?php echo $item->get_permalink(); ?>" title="<?php echo mysql2date(__('j F Y @ g:i a', 'bonestheme'), $item->get_date('Y-m-d H:i:s')); ?>" target="_blank">
+			<a href="<?php echo $item->get_permalink(); ?>" title="<?php echo mysql2date(__('j F Y @ g:i a', 'wp-theme'), $item->get_date('Y-m-d H:i:s')); ?>" target="_blank">
 				<?php echo $item->get_title(); ?>
 			</a>
 		</h4>
@@ -82,7 +82,7 @@ function bones_rss_dashboard_widget() {
 
 // calling all custom dashboard widgets
 function bones_custom_dashboard_widgets() {
-	wp_add_dashboard_widget('bones_rss_dashboard_widget', __( 'Recently on Themble (Customize on admin.php)', 'bonestheme' ), 'bones_rss_dashboard_widget');
+	wp_add_dashboard_widget('bones_rss_dashboard_widget', __( 'Recently on Themble (Customize on admin.php)', 'wp-theme' ), 'bones_rss_dashboard_widget');
 	/*
 	Be sure to drop any other created Dashboard Widgets
 	in this function and they will all load.
@@ -134,7 +134,7 @@ CUSTOMIZE ADMIN
 
 // custom backend footer
 function bones_custom_admin_footer() {
-	_e('<span id="footer-thankyou">Developed by <a href="https://www.zetec-it.com" target="_blank">Zetec IT Solutions</a></span>', 'bonestheme');
+	_e('<span id="footer-thankyou">Developed by <a href="https://www.zetec-it.com" target="_blank">Zetec IT Solutions</a></span>', 'wp-theme');
 }
 
 // adding it to the admin area

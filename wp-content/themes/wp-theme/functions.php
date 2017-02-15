@@ -25,7 +25,7 @@ function setup () {
     add_editor_style(get_stylesheet_directory_uri() . '/library/css/editor-style.css');
 
     // let's get language support going, if you need it
-    load_theme_textdomain('bonestheme', get_template_directory() . '/library/translation');
+    load_theme_textdomain('wp-theme', get_template_directory() . '/library/translation');
 
     // USE THIS TEMPLATE TO CREATE CUSTOM POST TYPES EASILY
     require_once('library/custom-post-type.php');
@@ -182,12 +182,12 @@ function theme_customizer ($wp_customize) {
   // Add Logo support
   $wp_customize->add_setting('logo');
   $wp_customize->add_section('logo_section', array(
-      'title'       => __('Logo', 'bonestheme'),
+      'title'       => __('Logo', 'wp-theme'),
       'priority'    => 30,
       'description' => 'Upload a logo',
   ));
   $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'logo', array(
-      'label'    => __('Logo', 'bonestheme'),
+      'label'    => __('Logo', 'wp-theme'),
       'section'  => 'logo_section',
       'settings' => 'logo',
   )));
@@ -222,8 +222,8 @@ function theme_register_sidebars () {
 
 	register_sidebar(array(
 		'id' => 'sidebar2',
-		'name' => __( 'Sidebar 2', 'bonestheme' ),
-		'description' => __( 'The second (secondary) sidebar.', 'bonestheme' ),
+		'name' => __( 'Sidebar 2', 'wp-theme' ),
+		'description' => __( 'The second (secondary) sidebar.', 'wp-theme' ),
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => '</div>',
 		'before_title' => '<h4 class="widgettitle">',
@@ -262,13 +262,13 @@ function bones_comments($comment, $args, $depth) {
         ?>
         <img data-gravatar="http://www.gravatar.com/avatar/<?php echo md5( $bgauthemail ); ?>?s=40" class="load-gravatar avatar avatar-48 photo" height="40" width="40" src="<?php echo get_template_directory_uri(); ?>/library/images/nothing.gif" />
         <?php // end custom gravatar call ?>
-        <?php printf(__( '<cite class="fn">%1$s</cite> %2$s', 'bonestheme' ), get_comment_author_link(), edit_comment_link(__( '(Edit)', 'bonestheme' ),'  ','') ) ?>
-        <time datetime="<?php echo comment_time('Y-m-j'); ?>"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php comment_time(__( 'F jS, Y', 'bonestheme' )); ?> </a></time>
+        <?php printf(__( '<cite class="fn">%1$s</cite> %2$s', 'wp-theme' ), get_comment_author_link(), edit_comment_link(__( '(Edit)', 'wp-theme' ),'  ','') ) ?>
+        <time datetime="<?php echo comment_time('Y-m-j'); ?>"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php comment_time(__( 'F jS, Y', 'wp-theme' )); ?> </a></time>
 
       </header>
       <?php if ($comment->comment_approved == '0') : ?>
         <div class="alert alert-info">
-          <p><?php _e( 'Your comment is awaiting moderation.', 'bonestheme' ) ?></p>
+          <p><?php _e( 'Your comment is awaiting moderation.', 'wp-theme' ) ?></p>
         </div>
       <?php endif; ?>
       <section class="comment_content cf">

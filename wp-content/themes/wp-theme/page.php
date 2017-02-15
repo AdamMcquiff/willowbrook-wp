@@ -8,6 +8,9 @@
 
 				<article id="post-<?php the_ID(); ?>" <?php post_class( 'cf' ); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
 
+					<?php // Use to get 'Feature Image URL' ?>
+					<?php // echo wp_get_attachment_url(get_post_thumbnail_id($post->ID)); ?>
+
 					<header class="article-header">
 
 						<h1 class="page-title" itemprop="headline">
@@ -47,12 +50,12 @@
 							 * http://gizmodo.com/5841121/google-wants-to-help-you-avoid-stupid-annoying-multiple-page-articles
 							 *
 							*/
-							wp_link_pages( array(
+							wp_link_pages(array(
 								'before'      => '<div class="page-links"><span class="page-links-title">Pages:</span>',
 								'after'       => '</div>',
 								'link_before' => '<span>',
 								'link_after'  => '</span>',
-							) );
+							));
 						?>
 					</section>
 

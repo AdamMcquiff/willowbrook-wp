@@ -51,7 +51,7 @@
 							Filed under <?php echo get_the_category_list(', '); ?>
 						<?php endif; ?>
 
-						<?php the_tags( '<p class="tags"><span class="tags-title">' . __( 'Tags:', 'bonestheme' ) . '</span> ', ', ', '</p>' ); ?>
+						<?php the_tags( '<p class="tags"><span class="tags-title">' . __( 'Tags:', 'wp-theme' ) . '</span> ', ', ', '</p>' ); ?>
 
 				</footer>
 
@@ -65,15 +65,15 @@
 
 				<article id="post-not-found" class="cf">
 					<header class="article-header">
-						<h1><?php _e('Oops, Post Not Found!', 'bonestheme'); ?></h1>
+						<h1><?php _e('Oops, Post Not Found!', 'wp-theme'); ?></h1>
 					</header>
 
 					<section class="entry-content">
-						<p><?php _e('Uh Oh. Something is missing. Try double checking things.', 'bonestheme'); ?></p>
+						<p><?php _e('Uh Oh. Something is missing. Try double checking things.', 'wp-theme'); ?></p>
 					</section>
 
 					<footer class="article-footer">
-						<p><?php _e('This is the error message in the index.php template.', 'bonestheme'); ?></p>
+						<p><?php _e('This is the error message in the index.php template.', 'wp-theme'); ?></p>
 					</footer>
 				</article>
 
