@@ -27,6 +27,7 @@ This is a boilerplate installation for WordPress comprised of:
 
 1. Pull the `git` repository locally - run `git clone https://Zetec@bitbucket.org/zetecit/boilerplate-wordpress.git` in your CLI
 2. Setup WordPress following the [Famous 5-Minute Install](https://codex.wordpress.org/Installing_WordPress#Famous_5-Minute_Install) guide - start from step 2.
+3. Find and Replace the following strings: '[WEBSITE NAME]', '[WEBSITE_URL]', '[WEBSITE_DESCRIPTION]', '[THEME_SLUG]' and 'theme_slug' as appropriate.
 
 ##### Setup the Theme #####
 
@@ -54,6 +55,7 @@ Within our `gulpfile.js` we are using:
 * `gulp-babel` - converts ES6 JavaScript into older, more supported code
 * `gulp-uncss` - removes unused css *(not currently in use)*
 * `gulp-cssnano` - minifies CSS
+* `gulp-base64` - converts images in CSS to base64 encoded
 * `gulp-imagemin` - minifies bitmap images
 * `gulp-svgmin` - minifies SVG images
 * `gulp-plumber` - prevents errors caused by gulp plugins

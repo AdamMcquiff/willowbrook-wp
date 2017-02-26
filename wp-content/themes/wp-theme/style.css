@@ -4,10 +4,12 @@ Theme URI: [WEBSITE URL]
 Description: [WEBSITE DESCRIPTION]
 Author: Zetec IT Solutions
 Author URI: https://www.zetec-it.com
+Text Domain: [THEME SLUG]
+Domain Path: library/translation
 Version: 1.0.0
 
 ******************************************************************/
 
 .sticky {}
 .gallery-caption {}
-.bypostauthor {}    
+.bypostauthor {}

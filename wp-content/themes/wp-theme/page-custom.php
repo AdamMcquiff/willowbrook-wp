@@ -35,7 +35,7 @@
 							</time>
 
 							<span class="by">
-								<?php echo __('by', 'wp-theme'); ?>
+								<?php echo __('by', 'theme_slug'); ?>
 							</span>
 
 							<span class="entry-author author" itemprop="author" itemscope itemptype="http://schema.org/Person">
@@ -75,14 +75,14 @@
 					<footer class="article-footer cf">
 						<p class="footer-comment-count">
 							<?php comments_number(
-								__('<span>No</span> Comments', 'wp-theme'),
-								__('<span>One</span> Comment', 'wp-theme'),
-								__('<span>%</span> Comments', 'wp-theme')
+								__('<span>No</span> Comments', 'theme_slug'),
+								__('<span>One</span> Comment', 'theme_slug'),
+								__('<span>%</span> Comments', 'theme_slug')
 							);?>
 						</p>
 
 						<p class="footer-category">
-							<?php echo __('Categories:', 'wp-theme'); ?>
+							<?php echo __('Categories:', 'theme_slug'); ?>
 							<?php echo get_the_category_list(', '); ?>
 						</p>
 
@@ -99,15 +99,15 @@
 
 				<article id="post-not-found" class="cf">
 					<header class="article-header">
-						<h1><?php _e('Oops, Post Not Found!', 'wp-theme'); ?></h1>
+						<h1><?php _e('Oops, Post Not Found!', 'theme_slug'); ?></h1>
 					</header>
 
 					<section class="entry-content">
-						<p><?php _e('Uh Oh. Something is missing. Try double checking things.', 'wp-theme'); ?></p>
+						<p><?php _e('Uh Oh. Something is missing. Try double checking things.', 'theme_slug'); ?></p>
 					</section>
 
 					<footer class="article-footer">
-						<p><?php _e('This is the error message in the index.php template.', 'wp-theme'); ?></p>
+						<p><?php _e('This is the error message in the index.php template.', 'theme_slug'); ?></p>
 					</footer>
 				</article>
 

@@ -5,7 +5,7 @@
 	<main class="mainm-all t-2of3 d-5of7 cf" role="main">
 		<h1 class="archive-title">
 			<span>
-				Search Results for:
+				<?php echo __('Search Results for:', 'theme_slug'); ?>
 			</span>
 
 			<?php echo esc_attr(get_search_query()); ?>
@@ -29,7 +29,7 @@
 						</time>
 
 						<span class="by">
-							by
+							<?php echo __('by', 'theme_slug'); ?>
 						</span>
 
 						<span class="entry-author author" itemprop="author" itemscope itemptype="http://schema.org/Person">
@@ -47,11 +47,11 @@
 
 				<footer class="article-footer">
 
-					<?php if(get_the_category_list(', ') != ''): ?>
-							Filed under <?php echo get_the_category_list(', '); ?>
-						<?php endif; ?>
+					<?php if (get_the_category_list(', ') != ''): ?>
+						<?php echo __('Filed under', 'theme_slug') . get_the_category_list(', '); ?>
+					<?php endif; ?>
 
-						<?php the_tags( '<p class="tags"><span class="tags-title">' . __( 'Tags:', 'wp-theme' ) . '</span> ', ', ', '</p>' ); ?>
+					<?php the_tags( '<p class="tags"><span class="tags-title">' . __( 'Tags:', 'theme_slug' ) . '</span> ', ', ', '</p>' ); ?>
 
 				</footer>
 
@@ -65,15 +65,15 @@
 
 				<article id="post-not-found" class="cf">
 					<header class="article-header">
-						<h1><?php _e('Oops, Post Not Found!', 'wp-theme'); ?></h1>
+						<h1><?php _e('Oops, Post Not Found!', 'theme_slug'); ?></h1>
 					</header>
 
 					<section class="entry-content">
-						<p><?php _e('Uh Oh. Something is missing. Try double checking things.', 'wp-theme'); ?></p>
+						<p><?php _e('Uh Oh. Something is missing. Try double checking things.', 'theme_slug'); ?></p>
 					</section>
 
 					<footer class="article-footer">
-						<p><?php _e('This is the error message in the index.php template.', 'wp-theme'); ?></p>
+						<p><?php _e('This is the error message in the index.php template.', 'theme_slug'); ?></p>
 					</footer>
 				</article>
 

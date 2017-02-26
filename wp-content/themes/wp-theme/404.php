@@ -9,7 +9,7 @@
 				<header class="article-header">
 
 					<h1>
-						Error 404 - Content Not Found
+						<?php echo __('Error 404 - Content Not Found', 'theme_slug'); ?>
 					</h1>
 
 				</header>
@@ -17,7 +17,7 @@
 				<section class="entry-content">
 
 					<p>
-						The content you were looking for was not found, but maybe try looking again!
+						<?php echo __('The content you were looking for was not found, but maybe try looking again!', 'theme_slug'); ?>
 					</p>
 
 				</section>
@@ -29,11 +29,7 @@
 				</section>
 
 				<footer class="article-footer">
-
-					<p>
-						This is the 404.php template
-					</p>
-
+					
 				</footer>
 
 			</article>

@@ -23,7 +23,7 @@
 							</time>
 
 							<span class="by">
-								by
+								<?php echo __('by', 'theme_slug'); ?>
 							</span>
 
 							<span class="entry-author author" itemprop="author" itemscope itemptype="http://schema.org/Person">
