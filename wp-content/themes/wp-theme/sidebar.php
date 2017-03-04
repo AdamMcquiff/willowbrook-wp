@@ -6,7 +6,7 @@
 
 			<div class="no-widgets">
 				<p>
-					<?php _e('This is a widget ready area. Add some and they will appear here.', 'wp-theme');  ?>
+					<?php _e('This is a widget ready area. Add some and they will appear here.', 'theme_slug');  ?>
 				</p>
 			</div>
 

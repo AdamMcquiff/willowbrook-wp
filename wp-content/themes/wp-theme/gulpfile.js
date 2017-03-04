@@ -6,11 +6,14 @@ const uglify = require('gulp-uglify');
 const babel = require('gulp-babel');
 const uncss = require('gulp-uncss');
 const cssnano = require('gulp-cssnano');
+const base64 = require('gulp-base64');
 const imagemin = require('gulp-imagemin');
 const svgmin = require('gulp-svgmin');
+const shorthand = require('gulp-shorthand');
 const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
 const addsrc = require('gulp-add-src');
+const todo = require('gulp-todo');
 const livereload = require('gulp-livereload');
 const browserSync = require('browser-sync').create();
 
@@ -40,6 +43,8 @@ gulp.task('sass', function () {
     gulp.src(paths.src.sass)
         .pipe(plumber(plumberErrorHandler))
         .pipe(sass())
+        .pipe(shorthand())
+        .pipe(base64())
         .pipe(cssnano())
         .pipe(gulp.dest(paths.build.css))
         .pipe(browserSync.stream())
@@ -97,6 +102,13 @@ gulp.task('watch', function () {
         gulp.src(paths.src.php)
             .pipe(browserSync.stream())
     })
+});
+
+// Generated 'todo' list
+gulp.task('todo', function() {
+    gulp.src(paths.src)
+        .pipe(todo())
+        .pipe(gulp.dest('./'));
 });
 
 // error handling

@@ -49,7 +49,7 @@ http://digwp.com/2010/10/customize-wordpress-dashboard/
 */
 
 // RSS Dashboard Widget
-function bones_rss_dashboard_widget() {
+function theme_slug_rss_dashboard_widget() {
 	if (function_exists('fetch_feed')) {
 		// include_once( ABSPATH . WPINC . '/feed.php' );               // include the required file
 		$feed = fetch_feed('http://feeds.feedburner.com/wpcandy');        // specify the source feed
@@ -66,7 +66,7 @@ function bones_rss_dashboard_widget() {
 		foreach ($items as $item): ?>
 
 		<h4 style="margin-bottom: 0;">
-			<a href="<?php echo $item->get_permalink(); ?>" title="<?php echo mysql2date(__('j F Y @ g:i a', 'wp-theme'), $item->get_date('Y-m-d H:i:s')); ?>" target="_blank">
+			<a href="<?php echo $item->get_permalink(); ?>" title="<?php echo mysql2date(__('j F Y @ g:i a', 'theme_slug'), $item->get_date('Y-m-d H:i:s')); ?>" target="_blank">
 				<?php echo $item->get_title(); ?>
 			</a>
 		</h4>
@@ -81,8 +81,8 @@ function bones_rss_dashboard_widget() {
 }
 
 // calling all custom dashboard widgets
-function bones_custom_dashboard_widgets() {
-	wp_add_dashboard_widget('bones_rss_dashboard_widget', __( 'Recently on Themble (Customize on admin.php)', 'wp-theme' ), 'bones_rss_dashboard_widget');
+function theme_slug_custom_dashboard_widgets() {
+	wp_add_dashboard_widget('theme_slug_rss_dashboard_widget', __( 'Recently on Themble (Customize on admin.php)', 'theme_slug' ), 'bones_rss_dashboard_widget');
 	/*
 	Be sure to drop any other created Dashboard Widgets
 	in this function and they will all load.
@@ -93,7 +93,7 @@ function bones_custom_dashboard_widgets() {
 // removing the dashboard widgets
 add_action('wp_dashboard_setup', 'disable_default_dashboard_widgets');
 // adding any custom widgets
-add_action('wp_dashboard_setup', 'bones_custom_dashboard_widgets');
+add_action('wp_dashboard_setup', 'theme_slug_custom_dashboard_widgets');
 
 /*********************
 CUSTOM LOGIN PAGE
@@ -101,7 +101,7 @@ CUSTOM LOGIN PAGE
 
 // calling your own login css so you can style it
 function login_css() {
-	wp_enqueue_style('bones_login_css', get_template_directory_uri() . '/library/css/login.css', false);
+	wp_enqueue_style('theme_slug_login_css', get_template_directory_uri() . '/library/css/login.css', false);
 }
 
 // changing the logo link from wordpress.org to your site
@@ -133,11 +133,11 @@ CUSTOMIZE ADMIN
 *********************/
 
 // custom backend footer
-function bones_custom_admin_footer() {
-	_e('<span id="footer-thankyou">Developed by <a href="https://www.zetec-it.com" target="_blank">Zetec IT Solutions</a></span>', 'wp-theme');
+function theme_slug_custom_admin_footer() {
+	_e('<span id="footer-thankyou">Developed by <a href="https://www.zetec-it.com" target="_blank">Zetec IT Solutions</a></span>', 'theme_slug');
 }
 
 // adding it to the admin area
-add_filter('admin_footer_text', 'bones_custom_admin_footer');
+add_filter('admin_footer_text', 'theme_slug_custom_admin_footer');
 
 ?>

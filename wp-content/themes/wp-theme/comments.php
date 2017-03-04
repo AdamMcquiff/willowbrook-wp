@@ -13,9 +13,9 @@ if (post_password_required())
         <h2 id="comments-title">
             <?php
             comments_number(
-                 __('<span>No</span> Comments', 'wp-theme'),
-                 __('<span>One</span> Comment', 'wp-theme'),
-                 __('<span>%</span> Comments', 'wp-theme')
+                 __('<span>No</span> Comments', 'theme_slug'),
+                 __('<span>One</span> Comment', 'theme_slug'),
+                 __('<span>%</span> Comments', 'theme_slug')
              );
              ?>
          </h2>
@@ -28,7 +28,7 @@ if (post_password_required())
 					'avatar_size'       => 40,
 					'callback'          => 'comments',
 					'type'              => 'all',
-					'reply_text'        => __('Reply', 'wp-theme'),
+					'reply_text'        => __('Reply', 'theme_slug'),
 					'page'              => '',
 					'per_page'          => '',
 					'reverse_top_level' => null,
@@ -40,16 +40,16 @@ if (post_password_required())
         <?php if (get_comment_pages_count() > 1 && get_option('page_comments')): ?>
         	<nav class="navigation comment-navigation" role="navigation">
               	<div class="comment-nav-prev">
-                    <?php previous_comments_link(__('&larr; Previous Comments', 'wp-theme')); ?>
+                    <?php previous_comments_link(__('&larr; Previous Comments', 'theme_slug')); ?>
                 </div>
               	<div class="comment-nav-next">
-                    <?php next_comments_link(__('More Comments &rarr;', 'wp-theme')); ?>
+                    <?php next_comments_link(__('More Comments &rarr;', 'theme_slug')); ?>
                 </div>
         	</nav>
         <?php endif; ?>
 
         <?php if (!comments_open()): ?>
-        	<p class="no-comments"><?php _e('Comments are closed.' , 'wp-theme'); ?></p>
+        	<p class="no-comments"><?php _e('Comments are closed.' , 'theme_slug'); ?></p>
         <?php endif; ?>
 
   <?php endif; ?>
