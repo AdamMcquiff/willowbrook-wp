@@ -15,24 +15,23 @@ const livereload = require('gulp-livereload');
 const browserSync = require('browser-sync').create();
 
 // paths to folders
-var project = "../wp-theme/";
-var url = "http://localhost/wp_boilerplate";
-var paths = {
+const URL = "http://localhost/wp_boilerplate";
+const paths = {
     src: {
-        php: project + "**/*.php",
-        sass: project + "library/scss/**/*.scss",
-        js: project + "library/js/src/*.js",
-        jsLibs: project + "library/js/src/libs/**/*.js",
-        bitmap: project + "library/img/src/**/*.{png,jpg,gif}",
-        vector: project + "library/img/src/**/*.svg"
+        php: "**/*.php",
+        sass: "library/scss/**/*.scss",
+        js: "library/js/src/*.js",
+        jsLibs: "library/js/src/libs/**/*.js",
+        bitmap: "library/img/src/**/*.{png,jpg,gif}",
+        vector: "library/img/src/**/*.svg"
     },
     build: {
-        css: project + "library/css",
-        js: project + "library/js",
-        img: project + "library/img/"
+        css: "library/css",
+        js: "library/js",
+        img: "library/img/"
     },
     babel: {
-        es2015: "../../../../wp-gulp/node_modules/babel-preset-es2015",
+        es2015: "node_modules/babel-preset-es2015",
     }
 }
 
@@ -79,13 +78,15 @@ gulp.task('bitmap', function () {
 gulp.task('vector', function () {
     return gulp.src(paths.src.vector)
         .pipe(svgmin())
-        .pipe(gulp.dest(paths.build.img));
+        .pipe(gulp.dest(paths.build.img))
+        .pipe(browserSync.stream())
+        .pipe(livereload());
 });
 
 // watches for changes in directories
 gulp.task('watch', function () {
     browserSync.init({
-        proxy: url,
+        proxy: URL,
     });
     livereload.listen();
     gulp.watch(paths.src.sass, ['sass']);

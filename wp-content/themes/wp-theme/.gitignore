@@ -5,6 +5,11 @@
 ############
 
 Bones.esproj/
+library/css/
+library/scss/.sass-cache
+library/js/scripts.js
+library/img/*
+!library/img/src
 
 ############
 ## IDEs

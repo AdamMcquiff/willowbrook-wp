@@ -65,7 +65,6 @@ function setup () {
 
 add_action('after_setup_theme', 'setup');
 
-
 /*********************
 OEMBED SIZE OPTIONS
 *********************/
