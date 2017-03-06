@@ -14,6 +14,9 @@ require_once('library/core.php');
 // CUSTOMIZE THE WORDPRESS ADMIN (off by default)
 require_once('library/admin.php');
 
+// CMB2 Custom Fields
+require_once('library/custom-fields.php');
+
 /*********************
 LAUNCH
 Let's get everything up and running.
