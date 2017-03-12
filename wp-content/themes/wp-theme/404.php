@@ -28,10 +28,6 @@
 
 				</section>
 
-				<footer class="article-footer">
-					
-				</footer>
-
 			</article>
 
 		</main>

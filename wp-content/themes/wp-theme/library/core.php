@@ -89,16 +89,16 @@ function rss_version() {
 }
 
 // remove WP version from scripts
-function remove_wp_ver_css_js( $src ) {
-	if ( strpos( $src, 'ver=' ) )
-		$src = remove_query_arg( 'ver', $src );
+function remove_wp_ver_css_js($src) {
+	if (strpos($src, 'ver='))
+		$src = remove_query_arg('ver', $src);
 	return $src;
 }
 
 // remove injected CSS for recent comments widget
 function remove_wp_widget_recent_comments_style() {
-	if ( has_filter( 'wp_head', 'wp_widget_recent_comments_style' ) ) {
-		remove_filter( 'wp_head', 'wp_widget_recent_comments_style' );
+	if (has_filter('wp_head', 'wp_widget_recent_comments_style')) {
+		remove_filter('wp_head', 'wp_widget_recent_comments_style');
 	}
 }
 
