@@ -3,7 +3,7 @@
 This is a boilerplate installation for WordPress comprised of:
 
 * A heavily customised version of [Bones Boilerplate](http://themble.com/bones/) theme (with SASS linter, Gulp and other improvements)
-* Composer.json file with WordPress core and selected plugins
+* `composer.json` file with WordPress core and selected plugins
 
 ### What plugins are included ###
 
