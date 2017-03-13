@@ -8,6 +8,8 @@
         }
     ],
     "require": {
+      	"php": ">=5.4",
+      	"johnpbloch/wordpress": "4.2",
         "wpackagist-plugin/cmb2":"dev-trunk",
         "wpackagist-plugin/contact-details":"dev-trunk",
         "wpackagist-plugin/contact-form-7":"dev-trunk",
@@ -23,6 +25,11 @@
         "wpackagist-plugin/wp-fastest-cache":"0.8.6.6",
         "wpackagist-plugin/wp-super-cache":"1.4.7"
     },
+	"extra": {
+	    "installer-paths": {
+	        "wordpress/wp-content/plugins/{$name}/": ["type:wordpress-plugin", "type:wordpress-theme"]
+	    }
+	},
     "autoload": {
         "psr-0": {
             "Acme": "src/"

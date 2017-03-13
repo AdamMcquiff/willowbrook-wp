@@ -1,6 +1,6 @@
-vendor/
-wp-content/plugins/*
-wp-content/languages/plugins
-!wp-content/plugins/index.php
+# Ignore WordPress Folder
+wordpress/
 
-wp-config.php
+# Ignore Composer stuff
+vendor/
+composer.lock
