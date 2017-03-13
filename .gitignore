@@ -1,5 +1,6 @@
 vendor/
 wp-content/plugins/*
+wp-content/languages/plugins
 !wp-content/plugins/index.php
 
 wp-config.php
