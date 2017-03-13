@@ -11,17 +11,19 @@ This is a boilerplate installation for WordPress comprised of:
 ### What plugins are included ###
 
 * [CMB2](https://github.com/WebDevStudios/CMB2)
+* [Contact Details](https://wordpress.org/plugins/contact-details/)
 * [Contact Form 7](https://contactform7.com/)
 * [Duplicator](https://en-gb.wordpress.org/plugins/duplicator/)
+* [Force Email Login](https://wordpress.org/plugins/force-email-login/)
+* [Login Lockdown](https://en-gb.wordpress.org/plugins/login-lockdown/)
 * [Minqueue](https://wordpress.org/plugins-wp/minqueue/)
 * [Safe SVG](https://en-gb.wordpress.org/plugins/safe-svg/)
 * [User Role Editor](https://en-gb.wordpress.org/plugins/user-role-editor/)
 * [White Label CMS](https://en-gb.wordpress.org/plugins/white-label-cms/)
 * [Wordfence](https://www.wordfence.com/)
-* [Yoast SEO](https://yoast.com/wordpress/plugins/seo/)
 * [WP Fastest Cache](http://www.wpfastestcache.com/)
-* [Force Email Login](https://wordpress.org/plugins/force-email-login/)
-* [Login Lockdown](https://en-gb.wordpress.org/plugins/login-lockdown/)
+* [WP Super Cache](https://en-gb.wordpress.org/plugins/wp-super-cache/)
+* [Yoast SEO](https://yoast.com/wordpress/plugins/seo/)
 
 ### How do I get set up? ###
 
