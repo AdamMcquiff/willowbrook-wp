@@ -5,7 +5,7 @@ Plugin Name: MinQueue
 Plugin URI: https://github.com/mattheu/MPH-Minify
 Description: Minify & concatenate enqueued scripts & styles. For developers who want complete control.
 Author: Matthew Haines-Young
-Version: 1.1.2
+Version: 1.1
 Author URI: http://www.matth.eu
 */
 
@@ -52,9 +52,10 @@ function minqueue_init () {
 	}
 
 	// Run the minifier
-	add_action( 'wp_print_scripts', 'minqueue_scripts', 100 );
-	add_action( 'wp_footer', 'minqueue_scripts', 5 );
-	add_action( 'wp_print_styles', 'minqueue_styles', 100 );
+	add_action( 'wp_print_scripts', 'minqueue_scripts', 999 );
+	add_action( 'wp_footer', 'minqueue_scripts' );
+	add_action( 'wp_print_styles', 'minqueue_styles', 999 );
+
 
 	// Load the admin - unless settings are not defined.
 	if ( ! defined( 'MINQUEUE_OPTIONS' ) )

@@ -14,8 +14,6 @@
 			
 			$this->options = $this->getOptions();
 
-			$this->checkActivePlugins();
-
 			$this->set_cdn();
 
 			$this->set_cache_file_path();
@@ -34,7 +32,7 @@
 
 				if(isset($hide_my_wp["new_content_path"]) && $hide_my_wp["new_content_path"]){
 					$hide_my_wp["new_content_path"] = trim($hide_my_wp["new_content_path"], "/");
-					$content_url = str_replace("wp-content", $hide_my_wp["new_content_path"], $content_url);
+					$content_url = str_replace(basename(WPFC_WP_CONTENT_DIR), $hide_my_wp["new_content_path"], $content_url);
 				}
 			}
 
@@ -45,7 +43,7 @@
 				if(isset($wph_settings["module_settings"])){
 					if(isset($wph_settings["module_settings"]["new_content_path"]) && $wph_settings["module_settings"]["new_content_path"]){
 						$wph_settings["module_settings"]["new_content_path"] = trim($wph_settings["module_settings"]["new_content_path"], "/");
-						$content_url = str_replace("wp-content", $wph_settings["module_settings"]["new_content_path"], $content_url);
+						$content_url = str_replace(basename(WPFC_WP_CONTENT_DIR), $wph_settings["module_settings"]["new_content_path"], $content_url);
 					}
 				}
 			}
@@ -133,15 +131,6 @@
 				}
 				
 				$this->cdn = $arr;
-			}
-		}
-
-		public function checkActivePlugins(){
-			//for WP-Polls
-			if($this->isPluginActive('wp-polls/wp-polls.php')){
-				require_once "wp-polls.php";
-				$wp_polls = new WpPollsForWpFc();
-				$wp_polls->execute();
 			}
 		}
 
@@ -695,22 +684,6 @@
 			}elseif($extension == "html"){
 				$this->err = "Buffer is empty so the cache cannot be created";
 			}
-		}
-
-		public function replaceLink($search, $replace, $content){
-			$href = "";
-
-			if(stripos($search, "<link") === false){
-				$href = $search;
-			}else{
-				preg_match("/.+href=[\"\'](.+)[\"\'].+/", $search, $out);
-			}
-
-			if(count($out) > 0){
-				$content = preg_replace("/<link[^>]+".preg_quote($out[1], "/")."[^>]+>/", $replace, $content);
-			}
-
-			return $content;
 		}
 
 		public function is_amp($content){

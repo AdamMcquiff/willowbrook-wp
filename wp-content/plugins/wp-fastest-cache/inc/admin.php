@@ -183,7 +183,8 @@
 		}
 
 		public function addJavaScript(){
-			wp_enqueue_script("wpfc-jquery-ui", plugins_url("wp-fastest-cache/js/jquery-ui.min.js"), array(), time(), false);
+			wp_enqueue_script("jquery-ui-draggable");
+			wp_enqueue_script("jquery-ui-position");
 			wp_enqueue_script("wpfc-dialog", plugins_url("wp-fastest-cache/js/dialog.js"), array(), time(), false);
 			wp_enqueue_script("wpfc-dialog-new", plugins_url("wp-fastest-cache/js/dialog_new.js"), array(), time(), false);
 
@@ -695,9 +696,11 @@
 				echo "<noscript id='wpfc-htaccess-path-data'>".$path.".htaccess"."</noscript>";
 				?>
 				<script type="text/javascript">
-					Wpfc_New_Dialog.dialog("wpfc-modal-htaccess", {close: "default"}, function(modal){
-						jQuery("#" + modal.id).find("label.mm-input-label").html(jQuery("#wpfc-htaccess-path-data").html());
-						jQuery("#" + modal.id).find("textarea.wiz-inp-readonly-textarea").html(jQuery("#wpfc-htaccess-data").html());
+					jQuery(document).ready(function(){
+						Wpfc_New_Dialog.dialog("wpfc-modal-htaccess", {close: "default"}, function(modal){
+							jQuery("#" + modal.id).find("label.mm-input-label").html(jQuery("#wpfc-htaccess-path-data").html());
+							jQuery("#" + modal.id).find("textarea.wiz-inp-readonly-textarea").html(jQuery("#wpfc-htaccess-data").html());
+						});
 					});
 				</script>
 				<?php
@@ -1440,7 +1443,7 @@
 				    					if(get_bloginfo('language') == "tr-TR"){
 				    						$premium_price = "100TL";
 				    					}else{
-					    					$svn_price_arr = "$39.99";
+					    					$premium_price = "$39.99";
 				    					}
 
 				    				?>
@@ -1484,9 +1487,11 @@
 
 
 				    				<?php if(class_exists("WpFastestCachePowerfulHtml")){ ?>
-					    				<button id="wpfc-update-premium-button" class="wpfc-btn primaryDisableCta" style="width:200px;">
-					    					<span data-type="update">Update</span>
-					    				</button>
+				    					<a href="http://www.wpfastestcache.com/blog/premium-update-before-v1-3-6/">
+						    				<button id="wpfc-update-premium-button" class="wpfc-btn primaryDisableCta" style="width:200px;">
+						    					<span data-type="update">Update</span>
+						    				</button>
+				    					</a>
 				    				<?php }else{ ?>
 					    				<button class="wpfc-btn primaryCta" id="wpfc-download-premium-button" class="wpfc-btn primaryDisableCta" style="width:200px;">
 					    					<span data-type="download">Download</span>

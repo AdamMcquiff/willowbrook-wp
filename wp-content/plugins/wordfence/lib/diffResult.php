@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"  dir="ltr" lang="en-US">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel='stylesheet' id='wordfence-main-style-css'  href='<?php echo wfUtils::getBaseURL(); ?>/css/diff.css?ver=<?php echo WORDFENCE_VERSION; ?>' type='text/css' media='all' />
+<link rel='stylesheet' id='wordfence-main-style-css'  href='<?php echo wfUtils::getBaseURL(); ?>/css/diff.css?ver=<?php echo WORDFENCE_VERSION ?>' type='text/css' media='all' />
 <body>
 <h1>Wordfence: Viewing File Differences</h1>
 <p style="width: 800px; font-size: 16px; font-family: Verdana;">
@@ -15,31 +15,24 @@
 	ignore this file the next time Wordfence scans your system.
 </p>
 <table border="0" style="margin: 0 0 20px 0;" class="summary">
-<tr><td>Filename:</td><td><?php echo wp_kses($_GET['file'], array()); ?></td></tr>
+<tr><td>Filename:</td><td><?php echo $_GET['file']; ?></td></tr>
 <tr><td>File type:</td><td><?php 
 	$cType = $_GET['cType'];
 	if($cType == 'core'){
 		echo "WordPress Core File</td></tr>";
 	} else if($cType == 'theme'){
-		echo "Theme File</td></tr><tr><td>Theme Name:</td><td>" . wp_kses($_GET['cName'], array()) . "</td></tr><tr><td>Theme Version:</td><td>" . wp_kses($_GET['cVersion'], array()) . "</td></tr>";
+		echo "Theme File</td></tr><tr><td>Theme Name:</td><td>" . $_GET['cName'] . "</td></tr><tr><td>Theme Version:</td><td>" . $_GET['cVersion'] . "</td></tr>";
 	} else if($cType == 'plugin'){
-		echo "Plugin File</td></tr><tr><td>Plugin Name:</td><td>" . wp_kses($_GET['cName'], array()) . "</td></tr><tr><td>Plugin Version:</td><td>" . wp_kses($_GET['cVersion'], array()) . "</td></tr>";
+		echo "Plugin File</td></tr><tr><td>Plugin Name:</td><td>" . $_GET['cName'] . "</td></tr><tr><td>Plugin Version:</td><td>" . $_GET['cVersion'] . "</td></tr>";
 	} else {
 		echo "Unknown Type</td></tr>";
 	}
 	?>
 </table>
 
-<?php 
-	if($diffResult){
-		echo $diffResult; 
-	} else {
-		echo "<br />There are no differences between the original file and the file in the repository.";
-	}
-
-?>
+<?php echo $diffResult; ?>
 
 
-<div class="diffFooter">&copy;&nbsp;2011 Wordfence &mdash; Visit <a href="http://wordfence.com/">Wordfence.com</a> for help, security updates and more.</div>
+<div class="diffFooter">&copy;&nbsp;2011 Wordfence &mdash; Visit <a href="http://wordfence.com/">Wordfence.com</a> for help, security updates and more.</a>
 </body>
 </html>

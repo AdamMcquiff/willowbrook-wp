@@ -1,271 +1,122 @@
 <?php
 class wfDB {
-	public $errorMsg = false;
-	public function __construct(){
+	private $dbh = false;
+	private static $dbhCache = false;
+	private $dbhost = false;
+	private $dbpassword = false;
+	private $dbname = false;
+	private $dbuser = false;
+	public function __construct($createNewHandle = false, $dbhost = false, $dbuser = false, $dbpassword = false, $dbname = false){
+		if($dbhost && $dbuser && $dbpassword && $dbname){
+			$this->dbhost = $dbhost;
+			$this->dbuser = $dbuser;
+			$this->dbpassword = $dbpassword;
+			$this->dbname = $dbname;
+		} else {
+			global $wpdb;
+			if(! $wpdb){ die("Not running under wordpress. Please supply db creditials to constructor."); }
+			$this->dbhost = $wpdb->dbhost;
+			$this->dbuser = $wpdb->dbuser;
+			$this->dbpassword = $wpdb->dbpassword;
+			$this->dbname = $wpdb->dbname;
+		}
+		if($createNewHandle){
+			$dbh = mysql_connect( $this->dbhost, $this->dbuser, $this->dbpassword, true );
+			mysql_select_db($this->dbname, $dbh);
+			$this->dbh = $dbh;
+		} else {
+			if(self::$dbhCache){
+				$this->dbh = self::$dbhCache;
+			} else {
+				$dbh = mysql_connect( $this->dbhost, $this->dbuser, $this->dbpassword, true );
+				mysql_select_db($this->dbname, $dbh);
+				self::$dbhCache = $dbh;
+				$this->dbh = self::$dbhCache;
+			}
+		}
+	}
+	public function querySingleRec(){
+		$args = func_get_args();
+		if(sizeof($args) == 1){
+			$query = $args[0];
+		} else if(sizeof($args) > 1){
+			$query = call_user_func_array('sprintf', $args);
+		} else {
+			wfdie("No arguments passed to querySingle()");
+		}
+		$res = mysql_query($query, $this->dbh);
+		$err = mysql_error();
+		if($err){
+			$trace=debug_backtrace(); $caller=array_shift($trace); error_log("Wordfence DB error in " . $caller['file'] . " line " . $caller['line'] . ": $err");
+		}
+		return mysql_fetch_assoc($res); //returns false if no rows found
 	}
 	public function querySingle(){
-		global $wpdb;
-		if(func_num_args() > 1){
-			$args = func_get_args();
-			return $wpdb->get_var(call_user_func_array(array($wpdb, 'prepare'), $args));
-		} else {
-			return $wpdb->get_var(func_get_arg(0));
-		}
-	}
-	public function querySingleRec(){ //queryInSprintfFormat, arg1, arg2, ... :: Returns a single assoc-array or null if nothing found.
-		global $wpdb;
-		if(func_num_args() > 1){
-			$args = func_get_args();
-			return $wpdb->get_row(call_user_func_array(array($wpdb, 'prepare'), $args), ARRAY_A);
-		} else {
-			return $wpdb->get_row(func_get_arg(0), ARRAY_A);
-		}
-	}
-	public function queryWrite(){
-		global $wpdb;
-		if(func_num_args() > 1){
-			$args = func_get_args();
-			return $wpdb->query(call_user_func_array(array($wpdb, 'prepare'), $args));
-		} else {
-			return $wpdb->query(func_get_arg(0));
-		}
-	}
-	public function flush(){ //Clear cache
-		global $wpdb;
-		$wpdb->flush();
-	}
-	public function querySelect(){ //sprintfString, arguments :: always returns array() and will be empty if no results.
-		global $wpdb;
-		if(func_num_args() > 1){
-			$args = func_get_args();
-			return $wpdb->get_results(call_user_func_array(array($wpdb, 'prepare'), $args), ARRAY_A);
-		} else {
-			return $wpdb->get_results(func_get_arg(0), ARRAY_A);
-		}
-	}
-	public function queryWriteIgnoreError(){ //sprintfString, arguments
-		global $wpdb;
-		$oldSuppress = $wpdb->suppress_errors(true);
 		$args = func_get_args();
-		call_user_func_array(array($this, 'queryWrite'), $args);
-		$wpdb->suppress_errors($oldSuppress);
-	}
-	public function columnExists($table, $col){
-		global $wpdb; $prefix = $wpdb->base_prefix;
-		$table = $prefix . $table;
-		$q = $this->querySelect("desc $table");
-		foreach($q as $row){
-			if($row['Field'] == $col){
-				return true;
+		if(sizeof($args) == 1){
+			$query = $args[0];
+		} else if(sizeof($args) > 1){
+			for($i = 1; $i < sizeof($args); $i++){
+				$args[$i] = mysql_real_escape_string($args[$i]);
 			}
+			$query = call_user_func_array('sprintf', $args);
+		} else {
+			wfdie("No arguments passed to querySingle()");
 		}
-		return false;
-	}
-	public function dropColumn($table, $col){
-		global $wpdb; $prefix = $wpdb->base_prefix;
-		$table = $prefix . $table;
-		$this->queryWrite("alter table $table drop column $col");
-	}
-	public function createKeyIfNotExists($table, $col, $keyName){
-		$table = $this->prefix() . $table;
-		$exists = $this->querySingle("show tables like '$table'");
-		$keyFound = false;
-		if($exists){
-			$q = $this->querySelect("show keys from $table");
-			foreach($q as $row){
-				if($row['Key_name'] == $keyName){
-					$keyFound = true;
-				}
-			}
+		$res = mysql_query($query, $this->dbh);
+		$err = mysql_error();
+		if($err){
+			$trace=debug_backtrace(); $caller=array_shift($trace); error_log("Wordfence DB error in " . $caller['file'] . " line " . $caller['line'] . ": $err");
 		}
-		if(! $keyFound){
-			$this->queryWrite("alter table $table add KEY $keyName($col)");
-		}
-	}
-	public function getMaxAllowedPacketBytes(){
-		$rec = $this->querySingleRec("show variables like 'max_allowed_packet'");
-		return intval($rec['Value']);
-	}
-	public function getMaxLongDataSizeBytes() {
-		$rec = $this->querySingleRec("show variables like 'max_long_data_size'");
-		return $rec['Value'];
-	}
-	public function prefix(){
-		global $wpdb;
-		return $wpdb->base_prefix;
-	}
-	public function truncate($table){ //Ensures everything is deleted if user is using MySQL >= 5.1.16 and does not have "drop" privileges
-		$this->queryWrite("truncate table $table");
-		$this->queryWrite("delete from $table");
-	}
-	public function getLastError(){
-		global $wpdb;
-		return $wpdb->last_error;
-	}
-	public function realEscape($str){
-		global $wpdb;
-		return $wpdb->_real_escape($str);
-	}
-}
-
-abstract class wfModel {
-
-	private $data;
-	private $db;
-	private $dirty = false;
-
-	/**
-	 * Column name of the primary key field.
-	 *
-	 * @return string
-	 */
-	abstract public function getIDColumn();
-
-	/**
-	 * Table name.
-	 *
-	 * @return mixed
-	 */
-	abstract public function getTable();
-
-	/**
-	 * Checks if this is a valid column in the table before setting data on the model.
-	 *
-	 * @param string $column
-	 * @return boolean
-	 */
-	abstract public function hasColumn($column);
-
-	/**
-	 * wfModel constructor.
-	 * @param array|int|string $data
-	 */
-	public function __construct($data = array()) {
-		if (is_array($data) || is_object($data)) {
-			$this->setData($data);
-		} else if (is_numeric($data)) {
-			$this->fetchByID($data);
-		}
-	}
-
-	public function fetchByID($id) {
-		$id = absint($id);
-		$data = $this->getDB()->get_row($this->getDB()->prepare('SELECT * FROM ' . $this->getTable() .
-				' WHERE ' . $this->getIDColumn() . ' = %d', $id));
-		if ($data) {
-			$this->setData($data);
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function save() {
-		if (!$this->dirty) {
+		if(! $res){
 			return false;
 		}
-		$this->dirty = ($this->getPrimaryKey() ? $this->update() : $this->insert()) === false;
-		return !$this->dirty;
+		$row = mysql_fetch_array($res, MYSQL_NUM);
+		if(! is_array($row)){ return false; }
+		return $row[0];
 	}
-
-	/**
-	 * @return false|int
-	 */
-	public function insert() {
-		$data = $this->getData();
-		unset($data[$this->getPrimaryKey()]);
-		$rowsAffected = $this->getDB()->insert($this->getTable(), $data);
-		$this->setPrimaryKey($this->getDB()->insert_id);
-		return $rowsAffected;
-	}
-
-	/**
-	 * @return false|int
-	 */
-	public function update() {
-		return $this->getDB()->update($this->getTable(), $this->getData(), array(
-			$this->getIDColumn() => $this->getPrimaryKey(),
-		));
-	}
-
-	/**
-	 * @param $name string
-	 * @return mixed
-	 */
-	public function __get($name) {
-		if (!$this->hasColumn($name)) {
-			return null;
-		}
-		return array_key_exists($name, $this->data) ? $this->data[$name] : null;
-	}
-
-	/**
-	 * @param $name string
-	 * @param $value mixed
-	 */
-	public function __set($name, $value) {
-		if (!$this->hasColumn($name)) {
-			return;
-		}
-		$this->data[$name] = $value;
-		$this->dirty = true;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getData() {
-		return $this->data;
-	}
-
-	/**
-	 * @param array $data
-	 * @param bool $flagDirty
-	 */
-	public function setData($data, $flagDirty = true) {
-		$this->data = array();
-		foreach ($data as $column => $value) {
-			if ($this->hasColumn($column)) {
-				$this->data[$column] = $value;
-				$this->dirty = (bool) $flagDirty;
+	public function query(){ //sprintfString, arguments
+		$args = func_get_args();
+		if(sizeof($args) == 1){
+			$query = $args[0];
+		} else if(sizeof($args) > 1){
+			for($i = 1; $i < sizeof($args); $i++){
+				$args[$i] = mysql_real_escape_string($args[$i]);
 			}
+			$query = call_user_func_array('sprintf', $args);
+		} else {
+			wfdie("No arguments passed to query()");
 		}
-	}
-
-	/**
-	 * @return wpdb
-	 */
-	public function getDB() {
-		if ($this->db === null) {
-			global $wpdb;
-			$this->db = $wpdb;
+		$res = mysql_query($query, $this->dbh);
+		$err = mysql_error();
+		if($err){
+			$trace=debug_backtrace(); $caller=array_shift($trace); error_log("Wordfence DB error in " . $caller['file'] . " line " . $caller['line'] . ": $err");
 		}
-		return $this->db;
+		return $res;
 	}
-
-	/**
-	 * @param wpdb $db
-	 */
-	public function setDB($db) {
-		$this->db = $db;
+	public function uQuery(){ //sprintfString, arguments NOTE: Very important that there is no other DB activity between uQuery and when you call mysql_free_result on the return value of uQuery.
+		$args = func_get_args();
+		if(sizeof($args) == 1){
+			$query = $args[0];
+		} else if(sizeof($args) > 1){
+			for($i = 1; $i < sizeof($args); $i++){
+				$args[$i] = mysql_real_escape_string($args[$i]);
+			}
+			$query = call_user_func_array('sprintf', $args);
+		} else {
+			wfdie("No arguments passed to query()");
+		}
+		$res = mysql_unbuffered_query($query, $this->dbh);
+		$err = mysql_error();
+		if($err){
+			$trace=debug_backtrace(); $caller=array_shift($trace); error_log("Wordfence DB error in " . $caller['file'] . " line " . $caller['line'] . ": $err");
+		}
+		return $res;
 	}
-
-	/**
-	 * @return int
-	 */
-	public function getPrimaryKey() {
-		return $this->{$this->getIDColumn()};
-	}
-
-	/**
-	 * @param int $value
-	 */
-	public function setPrimaryKey($value) {
-		$this->{$this->getIDColumn()} = $value;
+	private function wfdie($msg){
+		error_log($msg);
+		exit(1);
 	}
 }
-
 
 ?>

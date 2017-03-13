@@ -3,7 +3,7 @@
 Plugin Name: WP Fastest Cache
 Plugin URI: http://wordpress.org/plugins/wp-fastest-cache/
 Description: The simplest and fastest WP Cache system
-Version: 0.8.6.5
+Version: 0.8.6.6
 Author: Emre Vona
 Author URI: http://tr.linkedin.com/in/emrevona
 Text Domain: wp-fastest-cache
@@ -21,6 +21,7 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 */ 
+	// test
 	if (!defined('WPFC_WP_CONTENT_BASENAME')) {
 		if (!defined('WPFC_WP_PLUGIN_DIR')) {
 			if(preg_match("/(\/trunk\/|\/wp-fastest-cache\/)$/", plugin_dir_path( __FILE__ ))){
@@ -73,7 +74,6 @@ GNU General Public License for more details.
 
 			add_action( 'wp_ajax_wpfc_cache_statics_get', array($this, 'wpfc_cache_statics_get_callback'));
 
-			add_action( 'wp_ajax_wpfc_update_premium', array($this, 'wpfc_update_premium_callback'));
 
 			add_action( 'wp_ajax_wpfc_db_statics', array($this, 'wpfc_db_statics_callback'));
 			add_action( 'wp_ajax_wpfc_db_fix', array($this, 'wpfc_db_fix_callback'));
@@ -255,77 +255,6 @@ GNU General Public License for more details.
 			}
 
 			return false;
-		}
-
-		public function wpfc_update_premium_callback(){
-			if(current_user_can('manage_options')){
-				if($this->isPluginActive("wp-fastest-cache-premium/wpFastestCachePremium.php")){
-					if(!file_exists(WPFC_WP_PLUGIN_DIR."/wp-fastest-cache-premium/pro/library/update.php")){
-						$res = array("success" => false, "error_message" => "update.php is not exist");
-					}else{
-						include_once $this->get_premium_path("update.php");
-						
-						if(!class_exists("WpFastestCacheUpdate")){
-							$res = array("success" => false, "error_message" => "WpFastestCacheUpdate is not exist");
-						}else{
-							$wpfc_premium = new WpFastestCacheUpdate();
-							$content = $wpfc_premium->download_premium();
-
-							if($content["success"]){
-								$wpfc_zip_data = $content["content"];
-
-								$wpfc_zip_dest_path = WPFC_WP_PLUGIN_DIR."/wp-fastest-cache-premium.zip";
-
-								if(@file_put_contents($wpfc_zip_dest_path, $wpfc_zip_data)){
-
-									include_once ABSPATH."wp-admin/includes/file.php";
-									include_once ABSPATH."wp-admin/includes/plugin.php";
-
-									if(function_exists("unzip_file")){
-										$this->rm_folder_recursively(WPFC_WP_PLUGIN_DIR."/wp-fastest-cache-premium");
-										
-										if(!function_exists('gzopen')){
-											$res = array("success" => false, "error_message" => "Missing zlib extension"); 
-										}else{
-											WP_Filesystem();
-											$unzipfile = unzip_file($wpfc_zip_dest_path, WPFC_WP_PLUGIN_DIR."/");
-
-											if ($unzipfile) {
-												$result = activate_plugin( 'wp-fastest-cache-premium/wpFastestCachePremium.php' );
-
-												if ( is_wp_error( $result ) ) {
-													$res = array("success" => false, "error_message" => "Error occured while the plugin was activated"); 
-												}else{
-													$res = array("success" => true);
-													//$this->deleteCache(true);
-												}
-											} else {
-												$res = array("success" => false, "error_message" => 'Error occured while the file was unzipped');      
-											}
-										}
-										
-									}else{
-										$res = array("success" => false, "error_message" => "unzip_file() is not found");
-									}
-								}else{
-									$res = array("success" => false, "error_message" => "/wp-content/plugins/ is not writable");
-								}
-							}else{
-								$res = array("success" => false, "error_message" => $content["error_message"]);
-							}
-						}
-					}
-				}else{
-					$res = array("success" => false, "error_message" => "Premium is not active");
-
-				}
-
-				echo json_encode($res);
-				exit;
-
-			}else{
-				wp_die("Must be admin");
-			}
 		}
 
 		public function wpfc_cache_statics_get_callback(){
@@ -540,8 +469,8 @@ GNU General Public License for more details.
 						$value["content"] = preg_replace("/\=|\'|\"/", "", $value["content"]);
 
 						$value["content"] = trim($value["content"], "/");
-						$value["content"] = str_replace("#", "", $value["content"]);
-						$value["content"] = str_replace(" ", "", $value["content"]);
+
+						$value["content"] = preg_replace("/(\#|\s|\(|\)|\*)/", "", $value["content"]);
 
 						if($value["prefix"] == "homepage"){
 							$this->deleteHomePageCache(false);
@@ -916,6 +845,8 @@ GNU General Public License for more details.
 			if($post_id){
 				$permalink = get_permalink($post_id);
 
+				$permalink = urldecode(get_permalink($post_id));
+
 				//for trash contents
 				$permalink = rtrim($permalink, "/");
 				$permalink = preg_replace("/__trashed$/", "", $permalink);
@@ -1140,7 +1071,7 @@ GNU General Public License for more details.
 		public function set_preload(){
 			$preload_arr = array();
 
-			if(!empty($_POST)){
+			if(!empty($_POST) && isset($_POST["wpFastestCachePreload"])){
 				foreach ($_POST as $key => $value) {
 					$key = esc_url_raw($key);
 					$value = esc_url_raw($value);
@@ -1148,6 +1079,8 @@ GNU General Public License for more details.
 					preg_match("/wpFastestCachePreload_(.+)/", $key, $type);
 
 					if(!empty($type)){
+						$value = preg_replace("/[^0-9]+/", "", $value);
+						
 						if($type[1] == "number"){
 							$preload_arr[$type[1]] = $value; 
 						}else{
@@ -1579,9 +1512,51 @@ GNU General Public License for more details.
 			    'wpfc' => true
 		    );
 
+		    $schedules['everythreehours'] = array(
+			    'interval' => 60*60*3,
+			    'display' => __( 'Once Every 3 Hours' ),
+			    'wpfc' => true
+		    );
+
+		    $schedules['everyfourhours'] = array(
+			    'interval' => 60*60*4,
+			    'display' => __( 'Once Every 4 Hours' ),
+			    'wpfc' => true
+		    );
+
+		    $schedules['everyfivehours'] = array(
+			    'interval' => 60*60*5,
+			    'display' => __( 'Once Every 5 Hours' ),
+			    'wpfc' => true
+		    );
+
 		    $schedules['everysixhours'] = array(
 			    'interval' => 60*60*6,
 			    'display' => __( 'Once Every 6 Hours' ),
+			    'wpfc' => true
+		    );
+
+		    $schedules['everysevenhours'] = array(
+			    'interval' => 60*60*7,
+			    'display' => __( 'Once Every 7 Hours' ),
+			    'wpfc' => true
+		    );
+
+		    $schedules['everyeighthours'] = array(
+			    'interval' => 60*60*8,
+			    'display' => __( 'Once Every 8 Hours' ),
+			    'wpfc' => true
+		    );
+
+		    $schedules['everyninehours'] = array(
+			    'interval' => 60*60*9,
+			    'display' => __( 'Once Every 9 Hours' ),
+			    'wpfc' => true
+		    );
+
+		    $schedules['everytenhours'] = array(
+			    'interval' => 60*60*10,
+			    'display' => __( 'Once Every 10 Hours' ),
 			    'wpfc' => true
 		    );
 

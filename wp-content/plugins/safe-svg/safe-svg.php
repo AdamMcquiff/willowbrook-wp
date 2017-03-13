@@ -2,8 +2,8 @@
 /*
 Plugin Name: Safe SVG
 Plugin URI:  https://wordpress.org/plugins/safe-svg/
-Description: Allows SVG uploads into Wordpress and sanitizes the SVG before saving it
-Version:     1.3.2
+Description: Allows SVG uploads into WordPress and sanitizes the SVG before saving it
+Version:     1.4.1
 Author:      Daryll Doyle
 Author URI:  http://enshrined.co.uk
 Text Domain: safe-svg
@@ -38,6 +38,8 @@ if ( ! class_exists( 'safe_svg' ) ) {
             add_filter( 'upload_mimes', array( $this, 'allow_svg' ) );
             add_filter( 'wp_handle_upload_prefilter', array( $this, 'check_for_svg' ) );
 	        add_filter( 'wp_check_filetype_and_ext', array( $this, 'fix_mime_type_svg' ), 75, 4 );
+            add_filter( 'wp_prepare_attachment_for_js', array( $this, 'fix_admin_preview' ), 10, 3 );
+            add_filter( 'wp_get_attachment_image_src', array( $this, 'one_pixel_fix' ), 10, 4 );
         }
 
         /**
@@ -49,6 +51,7 @@ if ( ! class_exists( 'safe_svg' ) ) {
          */
         public function allow_svg( $mimes ) {
             $mimes['svg'] = 'image/svg+xml';
+            $mimes['svgz'] = 'image/svg+xml';
 
             return $mimes;
         }
@@ -73,7 +76,10 @@ if ( ! class_exists( 'safe_svg' ) ) {
 		    if ( $ext === 'svg' ) {
 			    $data['type'] = 'image/svg+xml';
 			    $data['ext']  = 'svg';
-		    }
+		    } elseif ( $ext === 'svgz' ) {
+                $data['type'] = 'image/svg+xml';
+                $data['ext']  = 'svgz';
+            }
 
 		    return $data;
 	    }
@@ -107,10 +113,25 @@ if ( ! class_exists( 'safe_svg' ) ) {
         protected function sanitize( $file ) {
             $dirty = file_get_contents( $file );
 
+            // Is the SVG gzipped? If so we try and decode the string
+            if ( $is_zipped = $this->is_gzipped( $dirty ) ) {
+                $dirty = gzdecode( $dirty );
+
+                // If decoding fails, bail as we're not secure
+                if ( $dirty === false ) {
+                    return false;
+                }
+            }
+
             $clean = $this->sanitizer->sanitize( $dirty );
 
             if ( $clean === false ) {
                 return false;
+            }
+
+            // If we were gzipped, we need to re-zip
+            if ( $is_zipped ) {
+                $clean = gzencode( $clean );
             }
 
             file_put_contents( $file, $clean );
@@ -118,6 +139,74 @@ if ( ! class_exists( 'safe_svg' ) ) {
             return true;
         }
 
+        /**
+         * Check if the contents are gzipped
+         * @see http://www.gzip.org/zlib/rfc-gzip.html#member-format
+         *
+         * @param $contents
+         *
+         * @return bool
+         */
+        protected function is_gzipped( $contents ) {
+            return 0 === mb_strpos( $contents , "\x1f" . "\x8b" . "\x08" );
+        }
+
+        /**
+         * Filters the attachment data prepared for JavaScript to add the sizes array to the response
+         *
+         * @param array      $response   Array of prepared attachment data.
+         * @param int|object $attachment Attachment ID or object.
+         * @param array      $meta       Array of attachment meta data.
+         *
+         * @return array
+         */
+        public function fix_admin_preview( $response, $attachment, $meta ) {
+
+            if ( $response['mime'] == 'image/svg+xml' ) {
+                $possible_sizes = apply_filters( 'image_size_names_choose', array(
+                    'thumbnail' => __( 'Thumbnail' ),
+                    'medium'    => __( 'Medium' ),
+                    'large'     => __( 'Large' ),
+                    'full'      => __( 'Full Size' ),
+                ) );
+
+                $sizes = array();
+
+                foreach ( $possible_sizes as $size ) {
+                    $sizes[ $size ] = array(
+                        'height'      => 2000,
+                        'width'       => 2000,
+                        'url'         => $response['url'],
+                        'orientation' => 'portrait',
+                    );
+                }
+
+                $response['sizes'] = $sizes;
+            }
+
+            return $response;
+        }
+
+        /**
+         * Filters the image src result.
+         * Here we're gonna spoof the image size and set it to 100 width and height
+         *
+         * @param array|false  $image         Either array with src, width & height, icon src, or false.
+         * @param int          $attachment_id Image attachment ID.
+         * @param string|array $size          Size of image. Image size or array of width and height values
+         *                                    (in that order). Default 'thumbnail'.
+         * @param bool         $icon          Whether the image should be treated as an icon. Default false.
+         *
+         * @return array
+         */
+        public function one_pixel_fix( $image, $attachment_id, $size, $icon ) {
+            if ( get_post_mime_type( $attachment_id ) == 'image/svg+xml' ) {
+                $image['1'] = 100;
+                $image['2'] = 100;
+            }
+
+            return $image;
+        }
     }
 }
 
