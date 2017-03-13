@@ -56,11 +56,11 @@ abstract class MinQueue {
 		$this->plugin_url    = apply_filters( 'minqueue_plugin_url', plugins_url( '', __FILE__ ) );
 
 		$uploads             = wp_upload_dir();
-
-		$this->cache_dir     = apply_filters( 'minqueue_cache_dir', sprintf(
+		
+		$this->cache_dir     = apply_filters( 'minqueue_cache_dir', sprintf( 
 			'%s/%s-cache',
 			str_replace( $this->site_root, '', $uploads['basedir'] ),
-			$this->prefix
+			$this->prefix 
 		) );
 
 		// Global record of everything minified.
@@ -317,7 +317,7 @@ abstract class MinQueue {
 				$_srcs[] = $_src;
 
 		return $_srcs;
-
+		
 	}
 
 	/**
@@ -339,7 +339,7 @@ abstract class MinQueue {
 			return false;
 
 		$src = $this->class->registered[$handle]->src;
-
+		
 		// Handles, can be used to load other scripts, without having their own src.
 		// In this case, return empty, rather than false.
 		if ( empty( $src ) )
@@ -421,10 +421,10 @@ abstract class MinQueue {
 
 		if ( ! class_exists( 'Minify_Loader' ) )
 			require 'PHP-Minify-Lib/Minify/Loader.php';
-
+		
 		if ( ! class_exists( 'Minify' ) )
-			require 'PHP-Minify-Lib/Minify.php';
-
+			require 'PHP-Minify-Lib/Minify.php';	
+		
 		foreach ( $srcs as &$src )
 			$src = $this->site_root . $src;
 
@@ -530,8 +530,6 @@ class MinQueue_Scripts extends MinQueue {
 	// Array of script Localization data.
 	public $script_localization = array();
 
-	public $is_footer_scripts = false;
-
 	function __construct( $queue = array() ) {
 
 		global $wp_scripts;
@@ -539,16 +537,10 @@ class MinQueue_Scripts extends MinQueue {
 		$this->class = &$wp_scripts;
 		$this->file_extension = '.js';
 
-		if ( did_action( 'wp_footer' ) )
-			$this->is_footer_scripts = true;
-
 		parent::__construct( $queue );
 
-		// Add the localization data to the head (or footer for footer scripts.
-		if ( ! $this->is_footer_scripts )
-			add_action( 'wp_print_scripts', array( $this, 'script_localization' ), 1 );
-		else
-			add_action( 'wp_print_footer_scripts', array( $this, 'script_localization' ), 1 );
+		// Add the localization data to the head. Do it as early as possible.
+		add_action( 'wp_print_scripts', array( $this, 'script_localization' ), 1000 );
 
 	}
 
@@ -557,10 +549,11 @@ class MinQueue_Scripts extends MinQueue {
 		$this->process_queue = parent::get_process_queue();
 
 		// Wait to minify footer scripts until wp_footer (& vice versa)
-		if ( $this->is_footer_scripts )
+		if ( did_action( 'wp_footer' ) ) {
 			unset( $this->process_queue[0] );
-		else
+		} else {
 			unset( $this->process_queue[1] );
+		}
 
 		// Get localized script data.
 		foreach( $this->process_queue as $group => $script_handles )

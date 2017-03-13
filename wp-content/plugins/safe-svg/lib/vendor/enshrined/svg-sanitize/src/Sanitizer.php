@@ -24,6 +24,11 @@ class Sanitizer
     const SCRIPT_REGEX = '/(?:\w+script|data):/xi';
 
     /**
+     * Regex to test for remote URLs in linked assets
+     */
+    const REMOTE_REFERENCE_REGEX = '/url\(([\'"]?(?:http|https):)[\'"]?([^\'"\)]*)[\'"]?\)/xi';
+
+    /**
      * @var DOMDocument
      */
     protected $xmlDocument;
@@ -47,6 +52,11 @@ class Sanitizer
      * @var bool
      */
     protected $minifyXML = false;
+
+    /**
+     * @var bool
+     */
+    protected $removeRemoteReferences = false;
 
     /**
      *
@@ -114,6 +124,16 @@ class Sanitizer
     public function setAllowedAttrs(AttributeInterface $allowedAttrs)
     {
         $this->allowedAttrs = $allowedAttrs::getAttributes();
+    }
+
+    /**
+     * Should we remove references to remote files?
+     *
+     * @param bool $removeRemoteRefs
+     */
+    public function removeRemoteReferences($removeRemoteRefs = false)
+    {
+        $this->removeRemoteReferences = $removeRemoteRefs;
     }
 
     /**
@@ -212,7 +232,7 @@ class Sanitizer
             $currentElement = $elements->item($i);
 
             // If the tag isn't in the whitelist, remove it and continue with next iteration
-            if (!in_array($currentElement->tagName, $this->allowedTags)) {
+            if (!in_array(strtolower($currentElement->tagName), $this->allowedTags)) {
                 $currentElement->parentNode->removeChild($currentElement);
                 continue;
             }
@@ -237,8 +257,16 @@ class Sanitizer
             $attrName = $element->attributes->item($x)->name;
 
             // Remove attribute if not in whitelist
-            if (!in_array($attrName, $this->allowedAttrs)) {
+            if (!in_array(strtolower($attrName), $this->allowedAttrs)) {
                 $element->removeAttribute($attrName);
+            }
+
+            // Do we want to strip remote references?
+            if($this->removeRemoteReferences) {
+                // Remove attribute if it has a remote reference
+                if (isset($element->attributes->item($x)->value) && $this->hasRemoteReference($element->attributes->item($x)->value)) {
+                    $element->removeAttribute($attrName);
+                }
             }
         }
     }
@@ -267,6 +295,21 @@ class Sanitizer
         if (preg_match(self::SCRIPT_REGEX, $href) === 1) {
             $element->removeAttribute('href');
         }
+    }
+
+    /**
+     * Does this attribute value have a remote reference?
+     *
+     * @param $value
+     * @return bool
+     */
+    protected function hasRemoteReference($value)
+    {
+        if (preg_match(self::REMOTE_REFERENCE_REGEX, $value) === 1) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

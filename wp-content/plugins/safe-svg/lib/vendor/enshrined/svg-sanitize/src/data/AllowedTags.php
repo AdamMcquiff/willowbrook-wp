@@ -38,10 +38,17 @@ class AllowedTags implements TagInterface
             // SVG
             'svg','altglyph','altglyphdef','altglyphitem','animatecolor',
             'animatemotion','animatetransform','circle','clippath','defs','desc',
-            'ellipse','font','g','glyph','glyphref','hkern','image','line',
+            'ellipse','filter','font','g','glyph','glyphref','hkern','image','line',
             'lineargradient','marker','mask','metadata','mpath','path','pattern',
             'polygon','polyline','radialgradient','rect','stop','switch','symbol',
             'text','textpath','title','tref','tspan','view','vkern',
+
+            // SVG Filters
+            'feblend','fecolormatrix','fecomponenttransfer','fecomposite',
+            'feconvolvematrix','fediffuselighting','fedisplacementmap',
+            'feflood','fefunca','fefuncb','fefuncg','fefuncr','fegaussianblur',
+            'femerge','femergenode','femorphology','feoffset',
+            'fespecularlighting','fetile','feturbulence',
 
             //MathML
             'math','menclose','merror','mfenced','mfrac','mglyph','mi','mlabeledtr',
@@ -49,7 +56,7 @@ class AllowedTags implements TagInterface
             'ms','mpspace','msqrt','mystyle','msub','msup','msubsup','mtable','mtd',
             'mtext','mtr','munder','munderover',
 
-            //Text
+            //text
             '#text'
         );
     }

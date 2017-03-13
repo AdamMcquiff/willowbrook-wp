@@ -128,11 +128,11 @@ You can change the names and dimensions to whatever
 you like. Enjoy!
 */
 
-function custom_image_sizes( $sizes ) {
-    return array_merge( $sizes, array(
+function custom_image_sizes($sizes) {
+    return array_merge($sizes, array(
         'thumb-600' => __('600px by 150px'),
         'thumb-300' => __('300px by 100px'),
-    ) );
+    ));
 }
 
 add_filter('image_size_names_choose', 'custom_image_sizes');
@@ -247,37 +247,43 @@ COMMENT LAYOUT
 
 // Comment Layout
 function theme_slug_comments($comment, $args, $depth) {
-   $GLOBALS['comment'] = $comment; ?>
-   <div id="comment-<?php comment_ID(); ?>" <?php comment_class('cf'); ?>>
-    <article  class="cf">
-      <header class="comment-author vcard">
-        <?php
-        /*
-          this is the new responsive optimized comment image. It used the new HTML5 data-attribute to display comment gravatars on larger screens only. What this means is that on larger posts, mobile sites don't have a ton of requests for comment images. This makes load time incredibly fast! If you'd like to change it back, just replace it with the regular wordpress gravatar call:
-          echo get_avatar($comment,$size='32',$default='<path_to_url>' );
-        */
-        ?>
-        <?php // custom gravatar call ?>
-        <?php
-          // create variable
-          $bgauthemail = get_comment_author_email();
-        ?>
-        <img data-gravatar="http://www.gravatar.com/avatar/<?php echo md5( $bgauthemail ); ?>?s=40" class="load-gravatar avatar avatar-48 photo" height="40" width="40" src="<?php echo get_template_directory_uri(); ?>/library/images/nothing.gif" />
-        <?php // end custom gravatar call ?>
-        <?php printf(__( '<cite class="fn">%1$s</cite> %2$s', 'theme_slug' ), get_comment_author_link(), edit_comment_link(__( '(Edit)', 'theme_slug' ),'  ','') ) ?>
-        <time datetime="<?php echo comment_time('Y-m-j'); ?>"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php comment_time(__( 'F jS, Y', 'theme_slug' )); ?> </a></time>
+	$GLOBALS['comment'] = $comment; ?>
+	<div id="comment-<?php comment_ID(); ?>" <?php comment_class('cf'); ?>>
+	<article class="cf">
+		<header class="comment-author vcard">
+			<?php
+			/*
+			this is the new responsive optimized comment image. It used the new HTML5 data-attribute to display comment gravatars on larger screens only. What this means is that on larger posts, mobile sites don't have a ton of requests for comment images. This makes load time incredibly fast! If you'd like to change it back, just replace it with the regular wordpress gravatar call:
+			echo get_avatar($comment,$size='32',$default='<path_to_url>' );
+			*/
+			?>
+			<?php // custom gravatar call ?>
+			<?php $bgauthemail = get_comment_author_email(); ?>
+			<img data-gravatar="http://www.gravatar.com/avatar/<?php echo md5( $bgauthemail ); ?>?s=40" class="load-gravatar avatar avatar-48 photo" height="40" width="40" src="<?php echo get_template_directory_uri(); ?>/library/images/nothing.gif" />
+			<?php // end custom gravatar call ?>
+			<cite class="fn">%1$s</cite> %2$s
+			<?php echo get_comment_author_link(); ?>
+			<?php echo edit_comment_link(__('(Edit)', 'theme_slug'),'  ',''); ?>
+			<time datetime="<?php echo comment_time('Y-m-j'); ?>">
+				<a href="<?php echo htmlspecialchars(get_comment_link($comment->comment_ID)) ?>">
+					<?php comment_time(__('F jS, Y', 'theme_slug')); ?>
+				</a>
+			</time>
+		</header>
+		<?php if ($comment->comment_approved == '0'): ?>
+			<div class="alert alert-info">
+				<p>
+					<?php _e('Your comment is awaiting moderation.', 'theme_slug') ?>
+				</p>
+			</div>
+		<?php endif; ?>
 
-      </header>
-      <?php if ($comment->comment_approved == '0') : ?>
-        <div class="alert alert-info">
-          <p><?php _e( 'Your comment is awaiting moderation.', 'theme_slug' ) ?></p>
-        </div>
-      <?php endif; ?>
-      <section class="comment_content cf">
-          <?php comment_text() ?>
-      </section>
-      <?php comment_reply_link(array_merge( $args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
-    </article>
+		<section class="comment_content cf">
+			<?php comment_text() ?>
+		</section>
+
+		<?php comment_reply_link(array_merge($args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+	</article>
 <?php
 }
 
@@ -297,32 +303,5 @@ function theme_slug_fonts () {
 }
 
 add_action('wp_enqueue_scripts', 'theme_slug_fonts');
-
-/*********************
-CONTACT DETAILS PLUGIN
-*********************/
-
-/* Adjusting the Contact Details plugin */
-function amend_contact_details_fields ($details) {
-    // Removing useless fields
-    unset($details['fax']);
-
-	// Add Address breakdown
-    $details['address'] = __('Address Line 1');
-    $details['street'] = __('Street');
-    $details['town'] = __('Town');
-    $details['region'] = __('Region');
-    $details['postcode'] = __('Postcode');
-
-    // Add social media
-    $details['facebook'] = __('Facebook');
-    $details['twitter'] = __('Twitter');
-    $details['linkedin'] = __('LinkedIn');
-
-    // You must always return the modified array
-    return $details;
-}
-
-add_filter('contact_details', 'amend_contact_details_fields');
 
 ?>
