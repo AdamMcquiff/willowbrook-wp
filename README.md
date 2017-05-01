@@ -2,11 +2,8 @@
 
 This is a boilerplate installation for WordPress comprised of:
 
-* A heavily customised version of [Bones Boilerplate](http://themble.com/bones/) theme
-* Gulp file setup for theme development
-* [WordPress Core Version 4.7.2](https://wordpress.org/download/)
-* A handful of select plugins
-
+* A heavily customised version of [Bones Boilerplate](http://themble.com/bones/) theme (with SASS linter, Gulp and other improvements)
+* `composer.json` file with WordPress core and selected plugins
 
 ### What plugins are included ###
 
@@ -30,23 +27,20 @@ This is a boilerplate installation for WordPress comprised of:
 ##### Setup WordPress #####
 
 1. Pull the `git` repository locally - run `git clone https://Zetec@bitbucket.org/zetecit/boilerplate-wordpress.git folder-name` in your CLI
-2. Setup WordPress following the [Famous 5-Minute Install](https://codex.wordpress.org/Installing_WordPress#Famous_5-Minute_Install) guide - start from step 2.
-3. Find and Replace the following strings: '[WEBSITE NAME]', '[WEBSITE_URL]', '[WEBSITE_DESCRIPTION]', '[THEME_SLUG]' and 'theme_slug' as appropriate.
+2. Run `composer update` to install WordPress and the plugins
+3. Setup WordPress following the [Famous 5-Minute Install](https://codex.wordpress.org/Installing_WordPress#Famous_5-Minute_Install).
 
 ##### Setup the Theme #####
 
-We have two themes within our `themes` directory. The first directory, `wp_theme`, is the actual theme that will be used in production.
+`wp_theme`, is the theme that will be used in production.
 
-The second directory, `wp_gulp`, handles all of the production task running stuff, such as generating CSS from our SASS files,
-minifying JavaScript and images, etc.
-
-We are also using `BrowserSync` to live preview our theme as we build it.
 
 1. Go to `wp-content/themes` and change the name of `wp_theme` to a name of your choice.
-2. Go to `wp-content/themes/wp_gulp` and run `npm install` from your CLI.
+2. Run `npm install` from the CLI
 3. Open `gulpfile.js` and add your new theme directory and localhost URL in the `project` and `url` variables
-4. Run `gulp watch` from the same directory from your CLI, this will start `BrowserSync` and start watching your files for changes.
-5. You can now start editing the theme within the `wp_theme` directory.
+4. Run `gulp watch` from your CLI, this will start `BrowserSync` and start watching your files for changes.
+5. 'Find and Replace': `[WEBSITE NAME]`, `[WEBSITE_URL]`, `[WEBSITE_DESCRIPTION]`, `[THEME_SLUG]` and `theme_slug` as appropriate.
+6. You can now start editing the theme within the `wp_theme` directory.
 
 ### Gulpfile ###
 
@@ -66,6 +60,7 @@ Within our `gulpfile.js` we are using:
 * `gulp-notify` - sends errors messages
 * `gulp-addsrc` - lets you add 'src' inbetween gulp pipes
 * `gulp-livereload` - reloads the page
+* `gulp-todo` - Generated a 'To-Do' list from comments in the code
 * `browser-sync` - live CSS preview and sync across browsers
 
 ### Contribution guidelines ###
