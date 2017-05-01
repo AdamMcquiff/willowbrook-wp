@@ -9,21 +9,21 @@
     ],
     "require": {
       	"php": ">=5.4",
-      	"johnpbloch/wordpress": "4.2",
+      	"johnpbloch/wordpress": "^4.2",
         "wpackagist-plugin/cmb2":"dev-trunk",
         "wpackagist-plugin/contact-details":"dev-trunk",
         "wpackagist-plugin/contact-form-7":"dev-trunk",
         "wpackagist-plugin/disable-json-api":"dev-trunk",
         "wpackagist-plugin/duplicator":"dev-trunk",
-        "wpackagist-plugin/login-lockdown":"v1.7.1",
-        "wpackagist-plugin/minqueue":"1.1",
-        "wpackagist-plugin/safe-svg":"1.4.1",
-        "wpackagist-plugin/user-role-editor":"4.31.1",
-        "wpackagist-plugin/white-label-cms":"1.6.1",
-        "wpackagist-plugin/wordfence":"v1.4.1",
-        "wpackagist-plugin/wordpress-seo":"4.2.1",
-        "wpackagist-plugin/wp-fastest-cache":"0.8.6.6",
-        "wpackagist-plugin/wp-super-cache":"1.4.7"
+        "wpackagist-plugin/login-lockdown":"^v1.7.1",
+        "wpackagist-plugin/minqueue":"^1.1",
+        "wpackagist-plugin/safe-svg":"^1.4.1",
+        "wpackagist-plugin/user-role-editor":"^4.31.1",
+        "wpackagist-plugin/white-label-cms":"^1.6.1",
+        "wpackagist-plugin/wordfence":"^v1.4.1",
+        "wpackagist-plugin/wordpress-seo":"^4.2.1",
+        "wpackagist-plugin/wp-fastest-cache":"^0.8.6.6",
+        "wpackagist-plugin/wp-super-cache":"^1.4.7"
     },
 	"extra": {
 	    "installer-paths": {
