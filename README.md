@@ -1,8 +1,8 @@
-# Zetec WordPress Boilerplate / README #
+# WP Willowbrooke / README #
 
-This is a boilerplate installation for WordPress comprised of:
+WP Willowbrooke is a boilerplate installation for WordPress comprised of:
 
-* A heavily customised version of [Bones Boilerplate](http://themble.com/bones/) theme (with SASS linter, Gulp and other improvements)
+* A heavily customised fork of [Bones Boilerplate](http://themble.com/bones/) theme (with SASS linter, Gulp and other improvements)
 * `composer.json` file with WordPress core and selected plugins
 
 ### What plugins are included ###
@@ -69,4 +69,4 @@ Within our `gulpfile.js` we are using:
 
 ### Who do I talk to? ###
 
-* Supported and built by [Zetec IT Solutions](https://www.zetec-it.com)
+* Supported and built by [Adam McKenna](http://www.adammckenna.co.uk)

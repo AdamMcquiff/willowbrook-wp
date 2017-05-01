@@ -20,10 +20,10 @@
         "wpackagist-plugin/safe-svg":"^1.4.1",
         "wpackagist-plugin/user-role-editor":"^4.31.1",
         "wpackagist-plugin/white-label-cms":"^1.6.1",
-        "wpackagist-plugin/wordfence":"^v1.4.1",
-        "wpackagist-plugin/wordpress-seo":"^4.2.1",
-        "wpackagist-plugin/wp-fastest-cache":"^0.8.6.6",
-        "wpackagist-plugin/wp-super-cache":"^1.4.7"
+        "wpackagist-plugin/wordfence":"v1.4.1",
+        "wpackagist-plugin/wordpress-seo":"4.2.1",
+        "wpackagist-plugin/wp-fastest-cache":"0.8.6.6",
+        "wpackagist-plugin/wp-super-cache":"1.4.7"
     },
 	"extra": {
 	    "installer-paths": {
