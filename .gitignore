@@ -1,5 +1,10 @@
-# Ignore WordPress Folder
-wordpress/
+# Ignore everything inside here   
+wordpress/*
+wordpress/wp-content/*
+wordpress/wp-content/themes/*
+!wordpress/wp-content
+!wordpress/wp-content/themes
+!wordpress/wp-content/themes/[THEME SLUG]
 
 # Ignore Composer stuff
 vendor/

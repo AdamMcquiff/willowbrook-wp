@@ -18,7 +18,6 @@ WP Willowbrooke is a boilerplate installation for WordPress comprised of:
 * [User Role Editor](https://en-gb.wordpress.org/plugins/user-role-editor/)
 * [White Label CMS](https://en-gb.wordpress.org/plugins/white-label-cms/)
 * [Wordfence](https://www.wordfence.com/)
-* [WP Fastest Cache](http://www.wpfastestcache.com/)
 * [WP Super Cache](https://en-gb.wordpress.org/plugins/wp-super-cache/)
 * [Yoast SEO](https://yoast.com/wordpress/plugins/seo/)
 
@@ -37,7 +36,7 @@ WP Willowbrooke is a boilerplate installation for WordPress comprised of:
 
 1. Go to `wp-content/themes` and change the name of `wp_theme` to a name of your choice.
 2. Run `npm install` from the CLI
-3. Open `gulpfile.js` and add your new theme directory and localhost URL in the `project` and `url` variables
+3. Open `gulpfile.js` and add your WordPress directory to the `URL` variable
 4. Run `gulp watch` from your CLI, this will start `BrowserSync` and start watching your files for changes.
 5. 'Find and Replace': `[WEBSITE NAME]`, `[WEBSITE URL]`, `[WEBSITE DESCRIPTION]`, `[THEME SLUG]` and `theme_slug` as appropriate.
 6. You can now start editing the theme within the `wp_theme` directory.
