@@ -62,6 +62,14 @@ Within our `gulpfile.js` we are using:
 * `gulp-todo` - Generated a 'To-Do' list from comments in the code
 * `browser-sync` - live CSS preview and sync across browsers
 
+### Future Implementations ###
+
+- [ ] Create symlink between root theme directory and a folder in wp-content/themes directory.
+- [ ] Replace current grid system with [susy](http://oddbird.net/susy/).
+- [ ] Add 'gulp-beer' to gulp workflow for error handling.
+- [ ] Implement [TinyReset](http://jgthms.com/minireset.css/) to replace current normalisation style.
+
+ 
 ### Contribution guidelines ###
 
 * The Boilerplate theme is based on [Bones Boilerplate](http://themble.com/bones/) theme.
