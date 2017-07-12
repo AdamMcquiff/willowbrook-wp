@@ -64,10 +64,10 @@ Within our `gulpfile.js` we are using:
 
 ### Future Implementations ###
 
-- # [checkbox:unchecked] Create symlink between root theme directory and a folder in wp-content/themes directory.
-- [checkbox:unchecked] Replace current grid system with [susy](http://oddbird.net/susy/).
-- [checkbox:unchecked] Add 'gulp-beer' to gulp workflow for error handling.
-- [checkbox:unchecked] Implement [TinyReset](http://jgthms.com/minireset.css/) to replace current normalisation style.
+- [ ] Create symlink between root theme directory and a folder in wp-content/themes directory.
+- [ ] Replace current grid system with [susy](http://oddbird.net/susy/).
+- [ ] Add 'gulp-beer' to gulp workflow for error handling.
+- [ ] Implement [TinyReset](http://jgthms.com/minireset.css/) to replace current normalisation style.
 
  
 ### Contribution guidelines ###
