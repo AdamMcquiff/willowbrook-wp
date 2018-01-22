@@ -1,4 +1,8 @@
-# WP Willowbrooke / README #
+This project is **no longer maintained** in favour of [Wordpressify](https://github.com/luangjokaj/wordpressify).
+ 
+ # WP Willowbrooke / README #
+
+
 
 WP Willowbrooke is a boilerplate installation for WordPress comprised of:
 
